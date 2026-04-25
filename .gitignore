@@ -1,0 +1,38 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Build and packaging
+build/
+dist/
+*.egg-info/
+
+# Local credentials and tokens
+.env
+.env.*
+credentials.json
+token_cache.json
+.wechat_publisher/
+
+# Agent/editor local state
+.claude/settings.local.json
+.vscode/
+.idea/
+
+# Logs and generated scratch files
+*.log
+tmp/
+temp/
+wechat_post_*

@@ -1,0 +1,44 @@
+{
+  "skill_name": "automatic-wechat-post",
+  "description": "端到端测试：从用户自然语言 → 5 个热点候选 → 写稿 → 配图 → 发草稿。因为需要真实 MCP 搜索 + APIMart + 微信 API，跑起来比普通 skill 慢得多（~3-5 分钟/case），且花 API token。首轮建议只跑 case 1 验证主流程。",
+  "evals": [
+    {
+      "id": 1,
+      "name": "baseline-cross-border-ecommerce-tax",
+      "prompt": "帮我发一篇跨境电商财税的公众号文章",
+      "expected_output": "Skill 自动解析出 industry=跨境电商，用 Tavily+Exa 搜近 30 天热点，呈现 5 个候选让用户选，选定后写 1800-2500 字 B 端口吻文章，生成商务封面+3 张手绘插图，转成微信 HTML 并发到公众号草稿箱，最后提示用户去后台检查。",
+      "files": [],
+      "assertions": []
+    },
+    {
+      "id": 2,
+      "name": "industry-switch-apparel-factory",
+      "prompt": "给我写一篇鞋服工厂财税相关的公众号文，最近那个关于出口退税的事儿可以讲讲",
+      "expected_output": "Skill 识别 industry=鞋服工厂，但用户已经指向了'出口退税'这个子话题，应该让搜索关键词更聚焦在出口退税+鞋服工厂。候选列表要至少有 1 条跟出口退税相关，不能全是泛泛的鞋服行业新闻。选中后文章要对'鞋服工厂'老板这个具体受众说话，而不是泛跨境电商。",
+      "files": [],
+      "assertions": []
+    },
+    {
+      "id": 3,
+      "name": "livestream-ecommerce-tax-reform",
+      "prompt": "写一篇讲直播电商税改的文发到公众号",
+      "expected_output": "industry=直播电商。这个赛道近几年频繁出税务新规（主播个税、佣金抵扣等），Skill 应该挑一条有清晰政策源（比如国税总局/某省局公告）的候选，而不是自媒体互相引用的二手消息。文章第 3 段要区分'大主播 MCN / 中腰部 / 个人小主播'三类的影响，不能一刀切。",
+      "files": [],
+      "assertions": []
+    }
+  ],
+  "notes": {
+    "prerequisites": [
+      "WECHAT_APP_ID / WECHAT_APP_SECRET 已配置并通过认证订阅号",
+      "APIMART_API_KEY 已配置",
+      "Tavily / Exa MCP 已安装并可正常搜索",
+      "服务器 IP 已加白名单"
+    ],
+    "cost_per_run_approx": {
+      "apimart_images": "4 张（1 cover + 3 body）× ~$0.04 = ~$0.16",
+      "tavily_exa": "2 次搜索，免费额度内",
+      "wechat_api": "免费"
+    },
+    "safe_to_rerun": "会真的创建草稿，需要手动去后台删除；建议测试时用一个独立的测试公众号"
+  }
+}
