@@ -1,14 +1,14 @@
 # automatic-wechat-post-skill
 
-财税主题微信公众号文章自动化 Skill：搜索热点、推荐选题、写稿、配图，并创建微信公众号草稿。
+A WeChat Official Account article automation Skill: discovers topics, recommends angles, drafts articles, generates images, and creates WeChat Official Account drafts.
 
-这个 Skill 默认服务于跨境电商财税内容，也可以扩展到鞋服工厂、直播电商、制造业、个体户等行业。它面向需要稳定产出政策解读和合规提醒的 B 端内容场景。
+By default, this Skill is tuned for tax and finance content for cross-border e-commerce, but it can also be adapted to apparel factories, live-commerce businesses, manufacturers, sole proprietors, and other B2B scenarios that need recurring policy interpretation and compliance content.
 
 ## What It Does
 
 - Searches recent tax, finance, compliance, and policy topics with Tavily and Exa MCP.
 - Scores and deduplicates candidate topics locally.
-- Drafts 1800-2500 Chinese-character WeChat articles for business owners and finance operators.
+- Drafts 1800-2500 character WeChat articles for business owners and finance operators.
 - Generates one cover image and three in-article illustrations.
 - Converts Markdown into WeChat-compatible inline-styled HTML.
 - Uploads article images to WeChat and creates a draft in the Official Account backend.
@@ -30,28 +30,28 @@ It does not:
 - Mass-send articles automatically.
 - Manage multiple Official Accounts.
 - Schedule posts.
-- Handle non-tax general content.
+- Handle broad non-policy content by default.
 - Replace manual fact-checking for policy details.
 
 ## Repository Layout
 
 ```text
 .
-├── SKILL.md                         # Skill instructions and end-to-end workflow
-├── requirements.txt                 # Python runtime dependencies
-├── scripts/
-│   ├── hot_topics.py                # Merge, deduplicate, and score search results
-│   ├── md_to_wechat_html.py         # Markdown to WeChat-compatible HTML
-│   ├── image_gen.py                 # APIMart image generation wrapper
-│   ├── cover_compose.py             # WeChat cover crop and title overlay
-│   ├── wechat_client.py             # Minimal WeChat Official Account API client
-│   └── publisher.py                 # Upload assets and create WeChat draft
-├── references/
-│   ├── wechat_api.md                # WeChat API notes and error codes
-│   ├── wechat_html_rules.md         # WeChat editor HTML compatibility rules
-│   └── writing_style.md             # Article structure and tone guide
-└── evals/
-    └── evals.json                   # Manual eval scenarios
+|-- SKILL.md                         # Skill instructions and end-to-end workflow
+|-- requirements.txt                 # Python runtime dependencies
+|-- scripts/
+|   |-- hot_topics.py                # Merge, deduplicate, and score search results
+|   |-- md_to_wechat_html.py         # Markdown to WeChat-compatible HTML
+|   |-- image_gen.py                 # APIMart image generation wrapper
+|   |-- cover_compose.py             # WeChat cover crop and title overlay
+|   |-- wechat_client.py             # Minimal WeChat Official Account API client
+|   `-- publisher.py                 # Upload assets and create WeChat draft
+|-- references/
+|   |-- wechat_api.md                # WeChat API notes and error codes
+|   |-- wechat_html_rules.md         # WeChat editor HTML compatibility rules
+|   `-- writing_style.md             # Article structure and tone guide
+`-- evals/
+    `-- evals.json                   # Manual eval scenarios
 ```
 
 ## Prerequisites
@@ -102,20 +102,20 @@ Credentials are loaded in this order:
 
 ## Usage
 
-Install or link this directory as a Skill in your agent environment, then ask for a finance or tax article to be created for WeChat.
+Install or link this directory as a Skill in your agent environment, then ask for a finance, tax, policy, or compliance article to be created for WeChat.
 
 Example prompts:
 
 ```text
-帮我发一篇跨境电商财税的公众号文章
+Create a WeChat article about tax compliance for cross-border e-commerce.
 ```
 
 ```text
-写一篇增值税新规解读发到公众号
+Write a WeChat Official Account article explaining the latest VAT policy update.
 ```
 
 ```text
-帮我在公众号发一条鞋服工厂税改的文章
+Create a WeChat draft about export tax rebate changes for apparel factories.
 ```
 
 The Skill will:
@@ -139,7 +139,7 @@ Merge and score search results:
 python scripts/hot_topics.py \
   --tavily /tmp/wechat_post_tavily.json \
   --exa /tmp/wechat_post_exa.json \
-  --industry "跨境电商" \
+  --industry "cross-border e-commerce" \
   --count 5 \
   --dedup-db ~/.wechat_publisher/published_topics.jsonl
 ```
@@ -159,7 +159,7 @@ python scripts/publisher.py \
   --article /tmp/wechat_post_article.md \
   --cover /tmp/wechat_post_cover.png \
   --body-dir /tmp/wechat_post_body/ \
-  --industry "跨境电商"
+  --industry "cross-border e-commerce"
 ```
 
 ## Safety Notes
